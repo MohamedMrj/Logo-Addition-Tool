@@ -2,7 +2,6 @@ import os
 from PIL import Image
 from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
 
-
 def add_logo_to_media(media_folder, logo_path, output_dir):
     """
     Add a logo to images and videos in the specified media folder.
@@ -14,7 +13,10 @@ def add_logo_to_media(media_folder, logo_path, output_dir):
     """
 
     # Open the logo image with an alpha channel (RGBA)
-    logo = Image.open(logo_path).convert("RGBA")
+    if os.path.splitext(logo_path)[1].lower() == '.png':
+        logo = Image.open(logo_path)
+    else:
+        logo = Image.open(logo_path).convert("RGBA")
 
     # Lists of supported image and video formats
     image_formats = ['.jpeg', '.gif', '.png', '.jpg', '.webp']
@@ -57,9 +59,6 @@ def add_logo_to_media(media_folder, logo_path, output_dir):
 
             # Paste the logo onto the image
             image.paste(logo_resized, position, logo_resized)
-                                                #logo_resized: This argument is optional and represents a mask image. It specifies a mask image that is used to control which parts of the pasted image should be visible. 
-                                                #In this case, it's the same logo_resized image used as the first argument. 
-                                                #Since it's not always necessary to use a mask image, this argument is omitted in this example, and the method will use the logo_resized image itself as the mask.
 
             # Save the image with the logo
             image.save(output_path, "PNG")
