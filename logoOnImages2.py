@@ -2,12 +2,6 @@ import os
 from PIL import Image
 from moviepy.editor import VideoFileClip, ImageClip, CompositeVideoClip
 
-# Example usage
-media_folder = 'path/to/your/media/folder'  # Folder containing your images/videos
-logo_path = 'path/to/your/logo.png'  # Path to the logo image
-output_dir = 'path/to/your/output/directory'  # Output directory for processed media
-
-
 
 def add_logo_to_media(media_folder, logo_path, output_dir):
     """
@@ -95,6 +89,11 @@ def add_logo_to_media(media_folder, logo_path, output_dir):
 
             # Save the video with the logo using libx264 codec for video and aac codec for audio
             composite_clip.write_videofile(output_path, codec='libx264', audio_codec='aac')
+
+# Example usage
+media_folder = 'path/to/your/media/folder'  # Folder containing your images/videos
+logo_path = 'path/to/your/logo.png'  # Path to the logo image
+output_dir = 'path/to/your/output/directory'  # Output directory for processed media
 
 
 add_logo_to_media(media_folder, logo_path, output_dir)
