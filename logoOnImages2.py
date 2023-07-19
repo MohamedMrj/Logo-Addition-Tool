@@ -77,15 +77,19 @@ def add_logo_to_media(media_folder, logo_path, output_dir):
             logo_clip = logo_clip.resize(height=100)
 
             # Create a mask image for the logo (if the logo has an alpha channel)
-            logo_mask = Image.new("L", logo.size, 255)  # Create a new grayscale image with all pixels set to white (255)
+            logo_mask = None
             if logo.mode in ('RGBA', 'LA') and logo.split()[-1] is not None:
                 logo_mask = ImageOps.invert(logo.split()[-1])  # Invert the alpha channel to make transparent parts black
 
             # Set the position for the logo (e.g., top left corner)
             position = (0, 0)
 
-            # Composite the logo onto the video using the mask image
-            composite_clip = CompositeVideoClip([video_clip, logo_clip.set_position(position)], mask=logo_mask)
+            # Set the mask image for the logo
+            if logo_mask is not None:
+                logo_clip = logo_clip.set_mask(ImageClip(logo_mask, ismask=True))
+
+            # Composite the logo onto the video
+            composite_clip = CompositeVideoClip([video_clip, logo_clip.set_position(position)])
 
             # Generate the output filename by adding '_logo' to the original filename
             output_filename = os.path.splitext(filename)[0] + '_logo' + os.path.splitext(filename)[1]
@@ -93,6 +97,7 @@ def add_logo_to_media(media_folder, logo_path, output_dir):
 
             # Save the video with the logo using libx264 codec for video and aac codec for audio
             composite_clip.write_videofile(output_path, codec='libx264', audio_codec='aac')
+
 # Example usage
 media_folder = 'path/to/your/media/folder'  # Folder containing your images/videos
 logo_path = 'path/to/your/logo.png'  # Path to the logo image
