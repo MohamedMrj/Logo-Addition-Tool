@@ -1,4 +1,5 @@
 # Logo Addition Tool
+![imgonline-com-ua-twotoone-2XxlVNxErb](https://github.com/MohamedMrj/Logo-Addition-Tool/assets/113178714/4dd99ef5-0007-4f98-81e9-d7476a265059)
 
 The Logo Addition Tool is a Python script that allows you to easily add a logo to images and videos in a specified folder. It supports various image and video formats and can handle both transparent and non-transparent logos. The script utilizes the popular `Pillow` library for image processing and `moviepy` library for video editing.
 
